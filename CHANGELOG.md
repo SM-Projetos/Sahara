@@ -2,6 +2,10 @@
 
 ## Não lançado
 
+- Tornados funcionais os atalhos laterais para a pasta pessoal, diretórios XDG do usuário e raiz do sistema de arquivos.
+- Adicionada a leitura dos caminhos personalizados em user-dirs.dirs, com respeito a XDG_CONFIG_HOME e fallback para os diretórios padrão.
+- Adicionados testes para resolução dos caminhos XDG, expansão de $HOME e atalhos desconhecidos.
+
 - Implementada a listagem de arquivos e diretórios do local inicial do usuário.
 - Adicionada navegação para subdiretórios e retorno ao diretório anterior.
 - Adicionado tratamento de erros de leitura e testes unitários do módulo de sistema de arquivos.
