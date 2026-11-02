@@ -124,7 +124,7 @@ export component MainWindow inherits Window {
                     }
                     Rectangle {
                         horizontal-stretch: 1; height: 34px; background: Theme.surface;
-                        border: 1px solid Theme.border; border-radius: 7px;
+                        border-width: 1px; border-color: Theme.border; border-radius: 7px;
                         HorizontalLayout {
                             padding-left: 12px; alignment: center;
                             Text { text: root.current_path; color: Theme.secondary; font-size: 12px; overflow: elide; }
@@ -138,7 +138,7 @@ export component MainWindow inherits Window {
                 Text { text: "Arquivos"; color: Theme.text; font-size: 22px; font-weight: 650; }
                 Rectangle {
                     vertical-stretch: 1; background: Theme.surface;
-                    border: 1px solid Theme.border; border-radius: 10px;
+                    border-width: 1px; border-color: Theme.border; border-radius: 10px;
                     clip: true;
                     if root.entries.length == 0 : Text {
                         text: root.status; color: Theme.muted;
