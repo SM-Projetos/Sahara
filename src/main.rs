@@ -1,6 +1,74 @@
+mod filesystem;
+
 slint::include_modules!();
+
+use filesystem::read_directory;
+use slint::{ModelRc, VecModel};
+use std::cell::RefCell;
+use std::path::PathBuf;
+use std::rc::Rc;
 
 fn main() -> Result<(), slint::PlatformError> {
     let window = MainWindow::new()?;
+    let home = std::env::var_os("HOME")
+        .map(PathBuf::from)
+        .filter(|path| path.is_dir())
+        .unwrap_or_else(|| PathBuf::from("/"));
+
+    let history = Rc::new(RefCell::new(Vec::<PathBuf>::new()));
+    let current = Rc::new(RefCell::new(home.clone()));
+    show_directory(&window, &home);
+
+    {
+        let window = window.as_weak();
+        let history = Rc::clone(&history);
+        let current = Rc::clone(&current);
+        window.unwrap().on_open_directory(move |path| {
+            let path = PathBuf::from(path.to_string());
+            if !path.is_dir() {
+                return;
+            }
+            history.borrow_mut().push(current.borrow().clone());
+            *current.borrow_mut() = path.clone();
+            if let Some(window) = window.upgrade() {
+                show_directory(&window, &path);
+            }
+        });
+    }
+
+    {
+        let window = window.as_weak();
+        let history = Rc::clone(&history);
+        let current = Rc::clone(&current);
+        window.unwrap().on_go_back(move || {
+            if let Some(previous) = history.borrow_mut().pop() {
+                *current.borrow_mut() = previous.clone();
+                if let Some(window) = window.upgrade() {
+                    show_directory(&window, &previous);
+                }
+            }
+        });
+    }
+
     window.run()
+}
+
+fn show_directory(window: &MainWindow, path: &std::path::Path) {
+    window.set_current_path(path.display().to_string().into());
+    match read_directory(path) {
+        Ok(entries) => {
+            let items = entries.into_iter().map(|entry| FileEntry {
+                name: entry.name.into(),
+                path: entry.path.display().to_string().into(),
+                is_directory: entry.is_directory,
+            }).collect::<Vec<_>>();
+            let count = items.len();
+            window.set_entries(ModelRc::new(VecModel::from(items)));
+            window.set_status(format!("{count} itens").into());
+        }
+        Err(error) => {
+            window.set_entries(ModelRc::new(VecModel::from(Vec::<FileEntry>::new())));
+            window.set_status(error.into());
+        }
+    }
 }

@@ -4,7 +4,7 @@ Gerenciador de arquivos para Linux, desenvolvido em Rust e Slint.
 
 ## Estado atual
 
-O repositório contém a estrutura inicial da aplicação e a primeira composição visual da janela principal. Esta versão é um protótipo de interface: ainda não navega pelo sistema de arquivos nem executa operações sobre arquivos.
+A aplicação possui uma janela inicial e navegação básica por diretórios: lista pastas e arquivos, permite abrir subdiretórios e retornar ao diretório anterior. Operações como copiar, mover, renomear e excluir ainda não estão disponíveis.
 
 ## Requisitos
 
@@ -19,14 +19,19 @@ O repositório contém a estrutura inicial da aplicação e a primeira composiç
 cargo run
 ```
 
+## Testes
+
+```bash
+cargo test
+```
+
 ## Estrutura
 
-- `src/main.rs`: ponto de entrada e inicialização da janela.
+- `src/main.rs`: inicialização da janela e integração da navegação.
+- `src/filesystem.rs`: leitura e ordenação de entradas de diretório.
 - `build.rs`: compilação dos arquivos Slint durante o build.
-- `ui/app-window.slint`: janela principal, layout inicial e tokens do tema escuro.
+- `ui/app-window.slint`: janela principal e apresentação da listagem.
 
 ## Direção do projeto
 
-A interface segue a identidade visual do Gamefic: superfícies escuras, roxo como cor de destaque e tipografia compacta. O tema escuro é o padrão inicial; o tema claro será considerado em uma etapa posterior.
-
-A lógica de domínio e o acesso ao sistema de arquivos serão implementados em módulos Rust separados da interface.
+O tema escuro é o padrão inicial. O tema claro será considerado em uma etapa posterior.
