@@ -1,0 +1,190 @@
+export component MainWindow inherits Window {
+    title: "Sahara";
+    width: 1180px;
+    height: 760px;
+    min-width: 820px;
+    min-height: 560px;
+    background: Theme.background;
+
+    HorizontalLayout {
+        spacing: 0px;
+
+        Rectangle {
+            width: 224px;
+            background: Theme.sidebar;
+
+            VerticalLayout {
+                padding: 18px;
+                spacing: 18px;
+
+                VerticalLayout {
+                    spacing: 3px;
+                    Text {
+                        text: "Sahara";
+                        color: Theme.text;
+                        font-size: 22px;
+                        font-weight: 700;
+                    }
+                    Text {
+                        text: "Gerenciador de arquivos";
+                        color: Theme.muted;
+                        font-size: 11px;
+                    }
+                }
+
+                Rectangle { height: 1px; background: Theme.border; }
+
+                VerticalLayout {
+                    spacing: 5px;
+                    for item[index] in ["Início", "Área de Trabalho", "Documentos", "Downloads", "Imagens", "Músicas", "Vídeos"] : Rectangle {
+                        height: 34px;
+                        border-radius: 7px;
+                        background: item == "Início" ? Theme.selection : transparent;
+                        HorizontalLayout {
+                            padding-left: 10px;
+                            alignment: center;
+                            Text {
+                                text: item;
+                                color: item == "Início" ? Theme.text : Theme.secondary;
+                                font-size: 13px;
+                            }
+                        }
+                    }
+                }
+
+                Rectangle { height: 1px; background: Theme.border; }
+
+                Text {
+                    text: "DISPOSITIVOS";
+                    color: Theme.muted;
+                    font-size: 10px;
+                    font-weight: 600;
+                }
+                Text {
+                    text: "▣  Sistema de arquivos";
+                    color: Theme.secondary;
+                    font-size: 12px;
+                }
+                Text {
+                    text: "◉  Outros locais";
+                    color: Theme.secondary;
+                    font-size: 12px;
+                }
+                Rectangle { vertical-stretch: 1; }
+                Text {
+                    text: "SAHARA  •  0.1.0";
+                    color: Theme.muted;
+                    font-size: 10px;
+                }
+            }
+        }
+
+        Rectangle { width: 1px; background: Theme.border; }
+
+        VerticalLayout {
+            spacing: 0px;
+
+            Rectangle {
+                height: 58px;
+                background: Theme.topbar;
+                HorizontalLayout {
+                    padding-left: 20px;
+                    padding-right: 20px;
+                    spacing: 10px;
+                    alignment: center;
+
+                    Text { text: "‹"; color: Theme.secondary; font-size: 24px; }
+                    Text { text: "›"; color: Theme.secondary; font-size: 24px; }
+                    Rectangle {
+                        horizontal-stretch: 1;
+                        height: 34px;
+                        background: Theme.surface;
+                        border: 1px solid Theme.border;
+                        border-radius: 7px;
+                        HorizontalLayout {
+                            padding-left: 12px;
+                            alignment: center;
+                            Text {
+                                text: "⌂   Início";
+                                color: Theme.secondary;
+                                font-size: 12px;
+                            }
+                        }
+                    }
+                    Rectangle {
+                        width: 210px;
+                        height: 34px;
+                        background: Theme.surface;
+                        border: 1px solid Theme.border;
+                        border-radius: 7px;
+                        HorizontalLayout {
+                            padding-left: 10px;
+                            alignment: center;
+                            Text { text: "⌕  Pesquisar neste local"; color: Theme.muted; font-size: 11px; }
+                        }
+                    }
+                }
+            }
+
+            Rectangle { height: 1px; background: Theme.border; }
+
+            VerticalLayout {
+                padding: 24px;
+                spacing: 18px;
+
+                VerticalLayout {
+                    spacing: 4px;
+                    Text { text: "Início"; color: Theme.text; font-size: 22px; font-weight: 650; }
+                    Text { text: "Seus arquivos e locais favoritos"; color: Theme.muted; font-size: 12px; }
+                }
+
+                Rectangle {
+                    background: Theme.surface;
+                    border: 1px solid Theme.border;
+                    border-radius: 10px;
+                    vertical-stretch: 1;
+
+                    VerticalLayout {
+                        alignment: center;
+                        spacing: 8px;
+                        Text { text: "⌂"; color: Theme.accent; font-size: 42px; horizontal-alignment: center; }
+                        Text { text: "A estrutura do Sahara está pronta para crescer"; color: Theme.text; font-size: 15px; horizontal-alignment: center; }
+                        Text {
+                            text: "A próxima etapa conectará esta interface à listagem real de diretórios do Linux.";
+                            color: Theme.muted;
+                            font-size: 12px;
+                            horizontal-alignment: center;
+                        }
+                    }
+                }
+            }
+
+            Rectangle { height: 1px; background: Theme.border; }
+            Rectangle {
+                height: 34px;
+                background: Theme.topbar;
+                HorizontalLayout {
+                    padding-left: 20px;
+                    padding-right: 20px;
+                    alignment: center;
+                    Text { text: "Pronto"; color: Theme.muted; font-size: 10px; }
+                    Rectangle { horizontal-stretch: 1px; }
+                    Text { text: "0 itens"; color: Theme.muted; font-size: 10px; }
+                }
+            }
+        }
+    }
+}
+
+export global Theme {
+    out property <color> background: #0d0f14;
+    out property <color> sidebar: #11141c;
+    out property <color> topbar: #11141c;
+    out property <color> surface: #171b25;
+    out property <color> border: #2a3040;
+    out property <color> selection: #30264d;
+    out property <color> accent: #8b5cf6;
+    out property <color> text: #f3f4f8;
+    out property <color> secondary: #c0c5d1;
+    out property <color> muted: #a1a8b8;
+}
