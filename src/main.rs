@@ -19,36 +19,32 @@ fn main() -> Result<(), slint::PlatformError> {
     let current = Rc::new(RefCell::new(home.clone()));
     show_directory(&window, &home);
 
-    {
-        let window = window.as_weak();
-        let history = Rc::clone(&history);
-        let current = Rc::clone(&current);
-        window.unwrap().on_open_directory(move |path| {
-            let path = PathBuf::from(path.to_string());
-            if !path.is_dir() {
-                return;
+    let weak_window = window.as_weak();
+    let back_history = Rc::clone(&history);
+    let back_current = Rc::clone(&current);
+    window.on_go_back(move || {
+        if let Some(previous) = back_history.borrow_mut().pop() {
+            *back_current.borrow_mut() = previous.clone();
+            if let Some(window) = weak_window.upgrade() {
+                show_directory(&window, &previous);
             }
-            history.borrow_mut().push(current.borrow().clone());
-            *current.borrow_mut() = path.clone();
-            if let Some(window) = window.upgrade() {
-                show_directory(&window, &path);
-            }
-        });
-    }
+        }
+    });
 
-    {
-        let window = window.as_weak();
-        let history = Rc::clone(&history);
-        let current = Rc::clone(&current);
-        window.unwrap().on_go_back(move || {
-            if let Some(previous) = history.borrow_mut().pop() {
-                *current.borrow_mut() = previous.clone();
-                if let Some(window) = window.upgrade() {
-                    show_directory(&window, &previous);
-                }
-            }
-        });
-    }
+    let weak_window = window.as_weak();
+    let open_history = Rc::clone(&history);
+    let open_current = Rc::clone(&current);
+    window.on_open_directory(move |path| {
+        let path = PathBuf::from(path.to_string());
+        if !path.is_dir() {
+            return;
+        }
+        open_history.borrow_mut().push(open_current.borrow().clone());
+        *open_current.borrow_mut() = path.clone();
+        if let Some(window) = weak_window.upgrade() {
+            show_directory(&window, &path);
+        }
+    });
 
     window.run()
 }
