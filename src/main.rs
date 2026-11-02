@@ -2,7 +2,7 @@ mod filesystem;
 
 slint::include_modules!();
 
-use filesystem::read_directory;
+use filesystem::{read_directory, resolve_location};
 use slint::{ModelRc, VecModel};
 use std::cell::RefCell;
 use std::path::PathBuf;
@@ -41,6 +41,22 @@ fn main() -> Result<(), slint::PlatformError> {
         }
         open_history.borrow_mut().push(open_current.borrow().clone());
         *open_current.borrow_mut() = path.clone();
+        if let Some(window) = weak_window.upgrade() {
+            show_directory(&window, &path);
+        }
+    });
+
+    let weak_window = window.as_weak();
+    let location_history = Rc::clone(&history);
+    let location_current = Rc::clone(&current);
+    let location_home = home.clone();
+    window.on_open_location(move |location| {
+        let Some(path) = resolve_location(&location_home, &location.to_string()) else {
+            return;
+        };
+
+        location_history.borrow_mut().push(location_current.borrow().clone());
+        *location_current.borrow_mut() = path.clone();
         if let Some(window) = weak_window.upgrade() {
             show_directory(&window, &path);
         }
