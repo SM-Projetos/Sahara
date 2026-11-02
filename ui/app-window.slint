@@ -16,6 +16,7 @@ export component MainWindow inherits Window {
     in property <string> current_path;
     in property <string> status;
     callback open_directory(string);
+    callback open_location(string);
     callback go_back();
 
     HorizontalLayout {
@@ -30,16 +31,80 @@ export component MainWindow inherits Window {
                 Text { text: "Gerenciador de arquivos"; color: Theme.muted; font-size: 11px; }
                 Rectangle { height: 1px; background: Theme.border; }
                 Text { text: "LOCAIS"; color: Theme.muted; font-size: 10px; font-weight: 600; }
-                Text { text: "Início"; color: Theme.secondary; font-size: 13px; }
-                Text { text: "Área de Trabalho"; color: Theme.secondary; font-size: 13px; }
-                Text { text: "Documentos"; color: Theme.secondary; font-size: 13px; }
-                Text { text: "Downloads"; color: Theme.secondary; font-size: 13px; }
-                Text { text: "Imagens"; color: Theme.secondary; font-size: 13px; }
-                Text { text: "Músicas"; color: Theme.secondary; font-size: 13px; }
-                Text { text: "Vídeos"; color: Theme.secondary; font-size: 13px; }
+                Rectangle {
+                    height: 24px;
+                    TouchArea { clicked => { root.open_location("home"); } }
+                    Text {
+                        x: 0px; width: parent.width; height: parent.height;
+                        text: "Início"; color: Theme.secondary; font-size: 13px;
+                        horizontal-alignment: left; vertical-alignment: center;
+                    }
+                }
+                Rectangle {
+                    height: 24px;
+                    TouchArea { clicked => { root.open_location("desktop"); } }
+                    Text {
+                        x: 0px; width: parent.width; height: parent.height;
+                        text: "Área de Trabalho"; color: Theme.secondary; font-size: 13px;
+                        horizontal-alignment: left; vertical-alignment: center;
+                    }
+                }
+                Rectangle {
+                    height: 24px;
+                    TouchArea { clicked => { root.open_location("documents"); } }
+                    Text {
+                        x: 0px; width: parent.width; height: parent.height;
+                        text: "Documentos"; color: Theme.secondary; font-size: 13px;
+                        horizontal-alignment: left; vertical-alignment: center;
+                    }
+                }
+                Rectangle {
+                    height: 24px;
+                    TouchArea { clicked => { root.open_location("downloads"); } }
+                    Text {
+                        x: 0px; width: parent.width; height: parent.height;
+                        text: "Downloads"; color: Theme.secondary; font-size: 13px;
+                        horizontal-alignment: left; vertical-alignment: center;
+                    }
+                }
+                Rectangle {
+                    height: 24px;
+                    TouchArea { clicked => { root.open_location("pictures"); } }
+                    Text {
+                        x: 0px; width: parent.width; height: parent.height;
+                        text: "Imagens"; color: Theme.secondary; font-size: 13px;
+                        horizontal-alignment: left; vertical-alignment: center;
+                    }
+                }
+                Rectangle {
+                    height: 24px;
+                    TouchArea { clicked => { root.open_location("music"); } }
+                    Text {
+                        x: 0px; width: parent.width; height: parent.height;
+                        text: "Músicas"; color: Theme.secondary; font-size: 13px;
+                        horizontal-alignment: left; vertical-alignment: center;
+                    }
+                }
+                Rectangle {
+                    height: 24px;
+                    TouchArea { clicked => { root.open_location("videos"); } }
+                    Text {
+                        x: 0px; width: parent.width; height: parent.height;
+                        text: "Vídeos"; color: Theme.secondary; font-size: 13px;
+                        horizontal-alignment: left; vertical-alignment: center;
+                    }
+                }
                 Rectangle { height: 1px; background: Theme.border; }
                 Text { text: "DISPOSITIVOS"; color: Theme.muted; font-size: 10px; font-weight: 600; }
-                Text { text: "Sistema de arquivos"; color: Theme.secondary; font-size: 12px; }
+                Rectangle {
+                    height: 24px;
+                    TouchArea { clicked => { root.open_location("filesystem"); } }
+                    Text {
+                        x: 0px; width: parent.width; height: parent.height;
+                        text: "Sistema de arquivos"; color: Theme.secondary; font-size: 12px;
+                        horizontal-alignment: left; vertical-alignment: center;
+                    }
+                }
                 Rectangle { vertical-stretch: 1; }
                 Text { text: "SAHARA  •  0.1.0"; color: Theme.muted; font-size: 10px; }
             }
