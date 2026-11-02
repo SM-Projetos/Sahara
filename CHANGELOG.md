@@ -2,6 +2,8 @@
 
 ## Não lançado
 
+- Corrigida a definição do tamanho inicial da janela Slint com preferred-width e preferred-height, mantendo os limites mínimos de redimensionamento.
+
 - Corrigida a sintaxe das bordas na interface Slint, substituindo a abreviação incompatível pelas propriedades border-width e border-color.
 
 - Tornados funcionais os atalhos laterais para a pasta pessoal, diretórios XDG do usuário e raiz do sistema de arquivos.
