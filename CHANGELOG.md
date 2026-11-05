@@ -2,6 +2,9 @@
 
 ## Não lançado
 
+- Alinhadas as colunas da listagem com o espaço reservado aos ícones e uma coluna fixa para os tipos de item.
+- Ajustadas para 300 ms as transições de hover da navegação e das linhas de arquivos.
+
 - Corrigido o dimensionamento horizontal dos layouts internos da listagem para alinhar os nomes à esquerda e os tipos à direita.
 
 - Reformulada a interface do Sahara com paleta azul-marinho e ciano, tipografia Inter incorporada, navegação lateral, barra de endereço e listagem em superfícies arredondadas.
