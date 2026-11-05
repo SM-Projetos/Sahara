@@ -2,6 +2,8 @@
 
 ## Não lançado
 
+- Corrigido o dimensionamento horizontal dos layouts internos da listagem para alinhar os nomes à esquerda e os tipos à direita.
+
 - Reformulada a interface do Sahara com paleta azul-marinho e ciano, tipografia Inter incorporada, navegação lateral, barra de endereço e listagem em superfícies arredondadas.
 - Adicionados ícones SVG próprios para a identidade e navegação do gerenciador de arquivos.
 - Mantida a integração existente com o sistema de arquivos e os callbacks de navegação.
