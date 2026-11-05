@@ -2,6 +2,8 @@
 
 ## Não lançado
 
+- Reestruturada a listagem com dimensões de coluna compartilhadas, linhas mais espaçosas, etiquetas de tipo refinadas e destaque persistente para o item selecionado.
+
 - Alinhadas as colunas da listagem com o espaço reservado aos ícones e uma coluna fixa para os tipos de item.
 - Ajustadas para 300 ms as transições de hover da navegação e das linhas de arquivos.
 
