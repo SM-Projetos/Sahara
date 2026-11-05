@@ -327,26 +327,37 @@ component DirectoryRow inherits Rectangle {
     in property <string> item-name;
     in property <string> item-path;
     in property <bool> is-directory;
+    in property <bool> is-selected: false;
+    callback selected(string);
     callback activated(string);
 
-    height: 48px;
-    border-radius: 10px;
-    background: touch.has-hover ? Theme.row-hover : #00000000;
-    animate background { duration: 300ms; }
+    height: 52px;
+    border-radius: 9px;
+    background: root.is-selected ? #12496b : (touch.has-hover ? Theme.row-hover : #00000000);
+    animate background { duration: 180ms; }
+
+    Rectangle {
+        x: 0px;
+        y: 9px;
+        width: 3px;
+        height: parent.height - 18px;
+        border-radius: 2px;
+        background: root.is-selected ? Theme.accent : #00000000;
+    }
 
     HorizontalLayout {
         width: 100%;
-        padding-left: 12px;
-        padding-right: 12px;
-        spacing: 12px;
+        padding-left: 14px;
+        padding-right: 14px;
+        spacing: 14px;
         alignment: center;
 
         Image {
             source: root.is-directory
                 ? @image-url("../assets/icons/folder.svg")
                 : @image-url("../assets/icons/file.svg");
-            width: 21px;
-            height: 21px;
+            width: 22px;
+            height: 22px;
             image-fit: contain;
             colorize: root.is-directory ? Theme.accent : Theme.text-muted;
         }
@@ -363,9 +374,11 @@ component DirectoryRow inherits Rectangle {
         }
 
         Rectangle {
-            width: 74px;
-            height: 25px;
-            border-radius: 13px;
+            width: 88px;
+            height: 27px;
+            border-radius: 14px;
+            border-width: 1px;
+            border-color: root.is-directory ? #1b6680 : #29445c;
             background: root.is-directory ? #103d59 : #102b43;
 
             Text {
@@ -382,6 +395,7 @@ component DirectoryRow inherits Rectangle {
 
     touch := TouchArea {
         clicked => {
+            root.selected(root.item-path);
             if root.is-directory {
                 root.activated(root.item-path);
             }
@@ -401,6 +415,7 @@ export component MainWindow inherits Window {
     in property <string> current_path;
     in property <string> status;
     in-out property <string> selected_location: "home";
+    in-out property <string> selected_path: "";
     callback open_directory(string);
     callback open_location(string);
     callback go_back();
@@ -471,20 +486,20 @@ export component MainWindow inherits Window {
                             spacing: 3px;
 
                             Rectangle {
-                                height: 34px;
-                                background: #071d35;
+                                height: 42px;
+                                background: #0a2743;
                                 border-radius: 9px;
 
                                 HorizontalLayout {
                                     width: 100%;
-                                    padding-left: 12px;
-                                    padding-right: 12px;
-                                    spacing: 12px;
+                                    padding-left: 14px;
+                                    padding-right: 14px;
+                                    spacing: 14px;
                                     alignment: center;
 
                                     // Reserva o mesmo espaço do ícone existente em cada linha.
                                     Rectangle {
-                                        width: 21px;
+                                        width: 22px;
                                         background: #00000000;
                                     }
 
@@ -503,7 +518,7 @@ export component MainWindow inherits Window {
                                         color: Theme.text-muted;
                                         font-size: 10px;
                                         font-weight: 750;
-                                        width: 74px;
+                                        width: 88px;
                                         horizontal-alignment: center;
                                     }
                                 }
@@ -523,7 +538,7 @@ export component MainWindow inherits Window {
                                 ScrollView {
                                     width: 100%;
                                     height: 100%;
-                                    content-height: root.entries.length == 0 ? 400px : root.entries.length * 51px + 10px;
+                                    content-height: root.entries.length == 0 ? 400px : root.entries.length * 55px + 10px;
                                     vertical-scrollbar-policy: as-needed;
                                     horizontal-scrollbar-policy: always-off;
                                     mouse-drag-pan-enabled: true;
@@ -565,6 +580,8 @@ export component MainWindow inherits Window {
                                             item-name: entry.name;
                                             item-path: entry.path;
                                             is-directory: entry.is_directory;
+                                            is-selected: root.selected_path == entry.path;
+                                            selected(path) => { root.selected_path = path; }
                                             activated(path) => {
                                                 root.selected_location = "";
                                                 root.open_directory(path);
